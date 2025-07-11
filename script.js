@@ -201,7 +201,7 @@ function enviarGoogleSheets() {
   formData.append("entry.2118980774", respuestasCorrectas);
   formData.append("entry.1770889491", respuestasIncorrectas);
 
-   fetch("https://script.google.com/macros/s/AKfycbwhM_6WQvf1tTbeDnKwC_AIjYqf01GpG14ylux-e5vbzBo0WZ30DjrHcu-gp7_jVbnlqw/exec", {
+   fetch("https://script.google.com/macros/s/AKfycbzv0ToB0RgsJboSdLXsV_uiFBGUPoANAv7R_NzmEEbzzy3QKTpkDVufs1JosuVIqU6KHg/exec", {
     method: "POST",
     mode: "no-cors",
     body: formData
@@ -219,7 +219,7 @@ function enviarCertificadoPorCorreo() {
   formData.append("entry.2118980774", respuestasCorrectas);
   formData.append("entry.1770889491", respuestasIncorrectas);
 
-  fetch("https://script.google.com/macros/s/AKfycbxtK2TdiDZ6iRgobuQk6E2qXHombX0ErH3KbKHgJ2HNdk5WbZkIcnAoQhE1oqOEQXRA/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwO7SThPvbT4mbpjTEI3x24adojCJKt14q50KPYSZHBQ80Hd-5H3CucrSHj9qfvUiUF/exec", {
     method: "POST",
     mode: "no-cors",
     body: formData
