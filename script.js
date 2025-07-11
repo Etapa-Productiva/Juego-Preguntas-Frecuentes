@@ -197,9 +197,9 @@ function enviarGoogleSheets() {
   formData.append("entry.1436076378", numeroFicha);
   formData.append("entry.480386414", nombrePrograma);
   formData.append("entry.446350167", correoUsuario);
-  formData.append("entry.1684532845", puntaje);
-  formData.append("entry.1369388644", respuestasCorrectas);
-  formData.append("entry.12071704", respuestasIncorrectas);
+  formData.append("entry.1279592004", puntaje);
+  formData.append("entry.2118980774", respuestasCorrectas);
+  formData.append("entry.1770889491", respuestasIncorrectas);
 
    fetch("https://script.google.com/macros/s/AKfycbwhM_6WQvf1tTbeDnKwC_AIjYqf01GpG14ylux-e5vbzBo0WZ30DjrHcu-gp7_jVbnlqw/exec", {
     method: "POST",
@@ -210,14 +210,16 @@ function enviarGoogleSheets() {
 
 function enviarCertificadoPorCorreo() {
   const formData = new FormData();
-  formData.append("entry.1170332590", nombreJugador);
-  formData.append("entry.1406171993", numeroFicha);
-  formData.append("entry.2108813296", correoUsuario);
-  formData.append("entry.1684532845", puntaje);
-  formData.append("entry.1369388644", respuestasCorrectas);
-  formData.append("entry.12071704", respuestasIncorrectas);
+  formData.append("entry.1074037193", nombreJugador);
+  formData.append("entry.760554111", numeroDocumento);
+  formData.append("entry.1436076378", numeroFicha);
+  formData.append("entry.480386414", nombrePrograma);
+  formData.append("entry.446350167", correoUsuario);
+  formData.append("entry.1279592004", puntaje);
+  formData.append("entry.2118980774", respuestasCorrectas);
+  formData.append("entry.1770889491", respuestasIncorrectas);
 
-  fetch("https://script.google.com/macros/s/AKfycbx5WUMbG7EFJgqTgd_UbmWhrqUyxsbfipb1nR27LtHgS_vxfdSQu0DOAZRmADADZ0TJig/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxtK2TdiDZ6iRgobuQk6E2qXHombX0ErH3KbKHgJ2HNdk5WbZkIcnAoQhE1oqOEQXRA/exec", {
     method: "POST",
     mode: "no-cors",
     body: formData
