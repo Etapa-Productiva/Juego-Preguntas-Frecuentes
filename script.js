@@ -1,5 +1,7 @@
 let nombreJugador = "";
+let numeroDocumento = "";
 let numeroFicha = "";
+let nombrePrograma = "";
 let correoUsuario = "";
 let preguntas = [];
 let preguntaActual = 0;
@@ -24,11 +26,13 @@ function mostrarPantallaNombre() {
 
 function guardarNombre() {
   const nombre = document.getElementById("nombre-usuario").value.trim();
+  const documento = document.getElementById("numero-documento").value.trim();
   const ficha = document.getElementById("numero-ficha").value.trim();
+  const programa = document.getElementById("nombre-programa").value.trim();
   const correo = document.getElementById("correo-usuario").value.trim();
   const autorizacion = document.getElementById("autorizacion").checked;
 
-  if (!nombre || !ficha || !correo) {
+  if (!nombre || !documento || !ficha || !programa || !correo) {
     alert("Por favor, completa todos los campos.");
     return;
   }
@@ -40,6 +44,9 @@ function guardarNombre() {
   nombreJugador = nombre;
   numeroFicha = ficha;
   correoUsuario = correo;
+  numeroDocumento = documento;
+  nombrePrograma = programa;
+
 
   cargarPreguntasDesdeFirebase(() => {
     document.getElementById("pantalla-nombre").classList.add("oculto");
@@ -158,6 +165,7 @@ function finalizarJuego() {
   document.getElementById("pantalla-final").classList.remove("oculto");
 
   document.getElementById("nombre-final").textContent = nombreJugador;
+  document.getElementById("numero-documento").textContent = numeroDocumento;
   document.getElementById("puntaje-final").textContent = puntaje;
   document.getElementById("correctas").textContent = respuestasCorrectas;
   document.getElementById("incorrectas").textContent = respuestasIncorrectas;
@@ -171,7 +179,9 @@ function guardarResultadoFirebase() {
   const jugadorRef = firebase.database().ref("jugadores").push();
   jugadorRef.set({
     nombre: nombreJugador,
+    documento: numeroDocumento,
     ficha: numeroFicha,
+    programa: nombrePrograma,
     correo: correoUsuario,
     puntaje: puntaje,
     correctas: respuestasCorrectas,
@@ -182,14 +192,16 @@ function guardarResultadoFirebase() {
 
 function enviarGoogleSheets() {
   const formData = new FormData();
-  formData.append("entry.1170332590", nombreJugador);
-  formData.append("entry.1406171993", numeroFicha);
-  formData.append("entry.2108813296", correoUsuario);
+  formData.append("entry.1074037193", nombreJugador);
+  formData.append("entry.760554111", numeroDocumento);
+  formData.append("entry.1436076378", numeroFicha);
+  formData.append("entry.480386414", nombrePrograma);
+  formData.append("entry.446350167", correoUsuario);
   formData.append("entry.1684532845", puntaje);
   formData.append("entry.1369388644", respuestasCorrectas);
   formData.append("entry.12071704", respuestasIncorrectas);
 
-   fetch("https://script.google.com/macros/s/AKfycbzKFYFqRCM4SS0D9mLpui4rVAMNwcmbvSBWYUB3ibrVaV7CrPGEhjKVTIbIiGn2jksMRg/exec", {
+   fetch("https://script.google.com/macros/s/AKfycbwhM_6WQvf1tTbeDnKwC_AIjYqf01GpG14ylux-e5vbzBo0WZ30DjrHcu-gp7_jVbnlqw/exec", {
     method: "POST",
     mode: "no-cors",
     body: formData
