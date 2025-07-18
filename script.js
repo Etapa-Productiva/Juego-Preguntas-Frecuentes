@@ -58,6 +58,7 @@ function mostrarPantallaJuego() {
   document.getElementById("pantalla-temas").classList.add("oculto");
   document.getElementById("pantalla-juego").classList.remove("oculto");
   document.getElementById("puntaje").textContent = puntaje;
+  document.getElementById("tiempo-total").textContent = formatearTiempo(tiempoTotal);
   iniciarTemporizadores();
   mostrarPregunta();
 }
@@ -86,7 +87,7 @@ function cargarPreguntasDesdeFirebase(callback) {
 function iniciarTemporizadores() {
   intervaloTotal = setInterval(() => {
     tiempoTotal--;
-    document.getElementById("tiempo-total").textContent = tiempoTotal;
+    document.getElementById("tiempo-total").textContent = formatearTiempo(tiempoTotal);
     if (tiempoTotal <= 0) {
       clearInterval(intervaloTotal);
       clearInterval(intervaloPregunta);
@@ -98,13 +99,13 @@ function iniciarTemporizadores() {
     tiempoPregunta--;
     document.getElementById("tiempo-pregunta").textContent = tiempoPregunta;
     if (tiempoPregunta <= 0) {
-      // Marcar como incorrecta la respuesta si el tiempo se acaba
       respuestasIncorrectas++;
       mostrarRetroalimentacion("⏱️ ¡Tiempo agotado! Respuesta incorrecta.");
-      avanzarPregunta(); // Avanzar a la siguiente pregunta
+      avanzarPregunta();
     }
   }, 1000);
 }
+
 
 function mostrarPregunta() {
   const pregunta = preguntas[preguntaActual];
@@ -241,6 +242,13 @@ function enviarCertificadoPorCorreo() {
     body: formData
   });
 }
+
+function formatearTiempo(segundos) {
+  const min = Math.floor(segundos / 60);
+  const seg = segundos % 60;
+  return `${min.toString().padStart(2, "0")}:${seg.toString().padStart(2, "0")}`;
+}
+
 
 
 function volverAlInicio() {
