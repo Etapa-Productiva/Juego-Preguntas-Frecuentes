@@ -108,6 +108,14 @@ function iniciarTemporizadores() {
 
 function mostrarPregunta() {
   const pregunta = preguntas[preguntaActual];
+
+  if (!pregunta || !Array.isArray(pregunta.opciones)) {
+    console.error("❌ Pregunta inválida o sin opciones:", pregunta);
+    alert("Hubo un problema cargando la pregunta. Intenta de nuevo.");
+    finalizarJuego();
+    return;
+  }
+
   document.getElementById("pregunta").textContent = pregunta.pregunta;
   const opciones = document.getElementById("opciones");
   opciones.innerHTML = "";
@@ -156,8 +164,10 @@ function avanzarPregunta() {
 }
 
 function finalizarJuego() {
-  if (resultadoEnviado) return; // ⛔ Evita ejecuciones múltiples
+  if (resultadoEnviado) return;
   resultadoEnviado = true;
+
+  const porcentaje = (respuestasCorrectas / preguntas.length) * 100;
   document.getElementById("porcentaje-final").textContent = porcentaje.toFixed(2);
 
   clearInterval(intervaloTotal);
@@ -173,12 +183,12 @@ function finalizarJuego() {
 
   guardarResultadoFirebase();
   enviarGoogleSheets();
-const porcentaje = (respuestasCorrectas / preguntas.length) * 100;
-if (porcentaje >= 80) {
-  enviarCertificadoPorCorreo(); 
-} else {
-  alert("Debes acertar al menos el 80% para obtener el certificado.");
-}
+
+  if (porcentaje >= 80) {
+    enviarCertificadoPorCorreo(); 
+  } else {
+    alert("Debes acertar al menos el 80% para obtener el certificado.");
+  }
 }
 
 function guardarResultadoFirebase() {
