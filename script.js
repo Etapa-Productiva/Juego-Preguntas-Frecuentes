@@ -75,7 +75,7 @@ function cargarPreguntasDesdeFirebase(callback) {
         const j = Math.floor(Math.random() * (i + 1));
         [todas[i], todas[j]] = [todas[j], todas[i]];
       }
-      preguntas = todas.slice(0, 3);
+      preguntas = todas.slice(0, 20);
       callback();
     })
     .catch(error => {
@@ -158,6 +158,7 @@ function avanzarPregunta() {
 function finalizarJuego() {
   if (resultadoEnviado) return; // ⛔ Evita ejecuciones múltiples
   resultadoEnviado = true;
+  document.getElementById("porcentaje-final").textContent = porcentaje.toFixed(2);
 
   clearInterval(intervaloTotal);
   clearInterval(intervaloPregunta);
@@ -172,7 +173,12 @@ function finalizarJuego() {
 
   guardarResultadoFirebase();
   enviarGoogleSheets();
+const porcentaje = (respuestasCorrectas / preguntas.length) * 100;
+
+if (porcentaje >= 80) {
   enviarCertificadoPorCorreo(); 
+} else {
+  alert("Debes acertar al menos el 80% para obtener el certificado.");
 }
 
 function guardarResultadoFirebase() {
