@@ -8,7 +8,7 @@ let preguntaActual = 0;
 let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
 let puntaje = 0;
-let tiempoTotal = 80;
+let tiempoTotal = 1800;
 let tiempoPregunta = 20;
 let intervaloTotal, intervaloPregunta;
 let resultadoEnviado = false;
