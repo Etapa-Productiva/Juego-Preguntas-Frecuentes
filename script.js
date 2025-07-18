@@ -179,6 +179,7 @@ if (porcentaje >= 80) {
 } else {
   alert("Debes acertar al menos el 80% para obtener el certificado.");
 }
+}
 
 function guardarResultadoFirebase() {
   const jugadorRef = firebase.database().ref("jugadores").push();
