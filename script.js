@@ -174,7 +174,6 @@ function finalizarJuego() {
   guardarResultadoFirebase();
   enviarGoogleSheets();
 const porcentaje = (respuestasCorrectas / preguntas.length) * 100;
-
 if (porcentaje >= 80) {
   enviarCertificadoPorCorreo(); 
 } else {
