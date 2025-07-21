@@ -147,11 +147,13 @@ a {
 }
 
 .grid-temas {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
   margin: 20px 0;
 }
+
 
 .tema-cubo {
   background-color: #004d40;
@@ -172,7 +174,7 @@ a {
 
 .descripcion-tema {
   position: absolute;
-  bottom: -110px;
+  top: -110px; /* aparece arriba del cubo */
   left: 50%;
   transform: translateX(-50%);
   background-color: #00332f;
@@ -186,6 +188,7 @@ a {
   transition: opacity 0.3s ease;
   text-align: center;
   z-index: 10;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .tema-cubo:hover .descripcion-tema {
