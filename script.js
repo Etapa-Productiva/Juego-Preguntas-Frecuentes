@@ -31,7 +31,7 @@ function guardarNombre() {
   const programa = document.getElementById("nombre-programa").value.trim();
   const correo = document.getElementById("correo-usuario").value.trim();
   const autorizacion = document.getElementById("autorizacion").checked;
-  const autorizacion = document.getElementById("tyc").checked;
+  const tyc = document.getElementById("tyc").checked;
 
   if (!nombre || !documento || !ficha || !programa || !correo) {
     alert("Por favor, completa todos los campos.");
