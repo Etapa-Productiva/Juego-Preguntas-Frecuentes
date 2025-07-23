@@ -94,7 +94,7 @@ function iniciarTemporizadores() {
       clearInterval(intervaloPregunta);
       finalizarJuego();
     }
-  }, 1000);
+  }, 100);
 
   intervaloPregunta = setInterval(() => {
     tiempoPregunta--;
