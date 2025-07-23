@@ -94,7 +94,7 @@ function iniciarTemporizadores() {
       clearInterval(intervaloPregunta);
       finalizarJuego();
     }
-  }, 100);
+  }, 1000);
 
   intervaloPregunta = setInterval(() => {
     tiempoPregunta--;
@@ -130,7 +130,7 @@ function mostrarPregunta() {
   });
 
   document.getElementById("respuesta").textContent = "";
-  document.getElementById("tiempo-pregunta").textContent = tiempoPregunta = 20;
+  document.getElementById("tiempo-pregunta").textContent = tiempoPregunta = 40;
   document.getElementById("progreso-pregunta").textContent = preguntaActual + 1;
 }
 
