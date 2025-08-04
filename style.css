@@ -41,7 +41,7 @@ body {
 /* Inputs */
 input[type="text"],
 input[type="number"],
-input[type="instructor"],
+select[type="instructor"],
 input[type="email"] {
   width: 100%;
   padding: 12px;
