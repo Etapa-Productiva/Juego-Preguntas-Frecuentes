@@ -31,6 +31,7 @@ function guardarNombre() {
   const ficha = document.getElementById("numero-ficha").value.trim();
   const programa = document.getElementById("nombre-programa").value.trim();
   const correo = document.getElementById("correo-usuario").value.trim();
+  const instructor = document.getElementById("nombre-instructor").value.trim();
   const autorizacion = document.getElementById("autorizacion").checked;
   const tyc = document.getElementById("tyc").checked;
 
@@ -48,6 +49,7 @@ function guardarNombre() {
   correoUsuario = correo;
   numeroDocumento = documento;
   nombrePrograma = programa;
+  nombreInstructor = instructor;
 
 
   cargarPreguntasDesdeFirebase(() => {
