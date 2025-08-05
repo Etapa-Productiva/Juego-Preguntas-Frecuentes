@@ -206,19 +206,19 @@ function guardarResultadoFirebase() {
 }
 
 function enviarDatosUnificados(porcentaje) {
-  // Enviar siempre, el Apps Script decidirá si emite certificado
   const fecha = new Date().toLocaleString();
-  const formData = new FormData();
-  formData.append("entry.1074037193", nombreJugador);
-  formData.append("entry.760554111", numeroDocumento);
-  formData.append("entry.1436076378", numeroFicha);
-  formData.append("entry.480386414", nombrePrograma);
-  formData.append("entry.446350167", correoUsuario);
-  formData.append("entry.1952037755", nombreInstructor);
-  formData.append("entry.1279592004", puntaje);
-  formData.append("entry.2118980774", respuestasCorrectas);
-  formData.append("entry.1770889491", respuestasIncorrectas);
-  formData.append("entry.9999999999", fecha); // ✅ Campo para fecha si quieres usarlo
+
+  const data = new URLSearchParams();
+  data.append("entry.1074037193", nombreJugador);
+  data.append("entry.760554111", numeroDocumento);
+  data.append("entry.1436076378", numeroFicha);
+  data.append("entry.480386414", nombrePrograma);
+  data.append("entry.446350167", correoUsuario);
+  data.append("entry.1952037755", nombreInstructor);
+  data.append("entry.1279592004", puntaje);
+  data.append("entry.2118980774", respuestasCorrectas);
+  data.append("entry.1770889491", respuestasIncorrectas);
+  //data.append("entry.9999999999", fecha); // fecha opcional
 
   fetch(WEBAPP_URL, {
     method: "POST",
@@ -232,6 +232,7 @@ function enviarDatosUnificados(porcentaje) {
     alert("Debes acertar al menos el 80% para obtener el certificado.");
   }
 }
+
 
 function formatearTiempo(segundos) {
   const min = Math.floor(segundos / 60);
