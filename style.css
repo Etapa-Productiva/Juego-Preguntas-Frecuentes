@@ -196,3 +196,25 @@ a {
   opacity: 1;
 }
 
+.autor {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;          /* Espacio entre nombre e íconos */
+  color: #ccc;
+  font-size: 14px;
+}
+
+.autor img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.autor img:hover {
+  transform: scale(1.2);
+}
+
+
