@@ -9,7 +9,7 @@ let respuestasCorrectas = 0;
 let respuestasIncorrectas = 0;
 let puntaje = 0;
 let tiempoTotal = 1800;
-let tiempoPregunta = 40;
+let tiempoPregunta = 55;
 let intervaloTotal, intervaloPregunta;
 let resultadoEnviado = false;
 
@@ -130,7 +130,7 @@ function mostrarPregunta() {
   });
 
   document.getElementById("respuesta").textContent = "";
-  document.getElementById("tiempo-pregunta").textContent = tiempoPregunta = 40;
+  document.getElementById("tiempo-pregunta").textContent = tiempoPregunta = 55;
   document.getElementById("progreso-pregunta").textContent = preguntaActual + 1;
 }
 
