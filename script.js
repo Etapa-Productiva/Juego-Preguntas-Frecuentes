@@ -218,6 +218,7 @@ function enviarGoogleSheets() {
   formData.append("entry.1436076378", numeroFicha);
   formData.append("entry.480386414", nombrePrograma);
   formData.append("entry.446350167", correoUsuario);
+  formData.append("entry.1952037755", nombreInstructor);
   formData.append("entry.1279592004", puntaje);
   formData.append("entry.2118980774", respuestasCorrectas);
   formData.append("entry.1770889491", respuestasIncorrectas);
