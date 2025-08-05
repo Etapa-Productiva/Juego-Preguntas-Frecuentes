@@ -3,6 +3,7 @@ let numeroDocumento = "";
 let numeroFicha = "";
 let nombrePrograma = "";
 let correoUsuario = "";
+let instructor = "";
 let preguntas = [];
 let preguntaActual = 0;
 let respuestasCorrectas = 0;
