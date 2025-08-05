@@ -15,7 +15,7 @@ let intervaloTotal, intervaloPregunta;
 let resultadoEnviado = false;
 
 // URL de tu Web App de Apps Script unificada
-const WEBAPP_URL = "https://script.google.com/macros/u/2/s/AKfycbz87gFIqByFWhVFMjhYRO3ZhLPheEEMRUADit-_8knvl7awYGWDb2M0SxkDTQkf3NAzlQ/exec";
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwyyeH5Gp4qd4gx5lwfgGJvB0voKNelBm8uuZF8aaM49mM4XaMRzSh9ORlQjnd5n_Vvsw/exec";
 
 // Mostrar pantallas
 function mostrarInstrucciones() {
