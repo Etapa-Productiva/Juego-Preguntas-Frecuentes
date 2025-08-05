@@ -41,9 +41,8 @@ body {
 /* Inputs */
 input[type="text"],
 input[type="number"],
-input[type="email"] 
-select,
-{
+input[type="email"],
+select {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
