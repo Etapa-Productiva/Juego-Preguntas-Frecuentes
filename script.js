@@ -3,7 +3,7 @@ let numeroDocumento = "";
 let numeroFicha = "";
 let nombrePrograma = "";
 let correoUsuario = "";
-let instructor = "";
+let nombreInstructor = "";
 let preguntas = [];
 let preguntaActual = 0;
 let respuestasCorrectas = 0;
@@ -31,7 +31,7 @@ function guardarNombre() {
   const ficha = document.getElementById("numero-ficha").value.trim();
   const programa = document.getElementById("nombre-programa").value.trim();
   const correo = document.getElementById("correo-usuario").value.trim();
-  const instructor = document.getElementById("instructor").value.trim();
+  const nombreInstructor = document.getElementById("instructor").value.trim();
   const autorizacion = document.getElementById("autorizacion").checked;
   const tyc = document.getElementById("tyc").checked;
 
