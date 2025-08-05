@@ -223,7 +223,7 @@ function enviarDatosUnificados(porcentaje) {
   fetch(WEBAPP_URL, {
     method: "POST",
     mode: "no-cors",
-    body: formData
+    body: data,
   });
 
   if (porcentaje >= 80) {
