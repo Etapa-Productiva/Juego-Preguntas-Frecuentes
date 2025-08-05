@@ -187,10 +187,10 @@ function finalizarJuego() {
   document.getElementById("incorrectas").textContent = respuestasIncorrectas;
 
   guardarResultadoFirebase();
-  enviarGoogleSheets();
+  enviarDatosUnificados();
 
   if (porcentaje >= 80) {
-    enviarCertificadoPorCorreo(); 
+    alert("✅ Tu certificado será enviado a tu correo.");
   } else {
     alert("Debes acertar al menos el 80% para obtener el certificado.");
   }
@@ -211,38 +211,19 @@ function guardarResultadoFirebase() {
   });
 }
 
-function enviarGoogleSheets() {
+function enviarDatosUnificados() {
   const formData = new FormData();
-  formData.append("entry.1074037193", nombreJugador);
-  formData.append("entry.760554111", numeroDocumento);
-  formData.append("entry.1436076378", numeroFicha);
-  formData.append("entry.480386414", nombrePrograma);
-  formData.append("entry.446350167", correoUsuario);
-  formData.append("entry.1952037755", nombreInstructor);
-  formData.append("entry.1279592004", puntaje);
-  formData.append("entry.2118980774", respuestasCorrectas);
-  formData.append("entry.1770889491", respuestasIncorrectas);
+  formData.append("entry.1074037193", nombreJugador);      // Nombre
+  formData.append("entry.760554111", numeroDocumento);     // Documento
+  formData.append("entry.1436076378", numeroFicha);        // Ficha
+  formData.append("entry.480386414", nombrePrograma);      // Programa
+  formData.append("entry.446350167", correoUsuario);       // Correo
+  formData.append("entry.1952037755", nombreInstructor);   // Instructor
+  formData.append("entry.1279592004", puntaje);            // Puntaje
+  formData.append("entry.2118980774", respuestasCorrectas);// Correctas
+  formData.append("entry.1770889491", respuestasIncorrectas);// Incorrectas
 
-   fetch("https://script.google.com/macros/s/AKfycbz87gFIqByFWhVFMjhYRO3ZhLPheEEMRUADit-_8knvl7awYGWDb2M0SxkDTQkf3NAzlQ/exec", {
-    method: "POST",
-    mode: "no-cors",
-    body: formData
-  });
-}
-
-function enviarCertificadoPorCorreo() {
-  const formData = new FormData();
-  formData.append("entry.1074037193", nombreJugador);
-  formData.append("entry.760554111", numeroDocumento);
-  formData.append("entry.1436076378", numeroFicha);
-  formData.append("entry.480386414", nombrePrograma);
-  formData.append("entry.446350167", correoUsuario);
-  formData.append("entry.1952037755", nombreInstructor);
-  formData.append("entry.1279592004", puntaje);
-  formData.append("entry.2118980774", respuestasCorrectas);
-  formData.append("entry.1770889491", respuestasIncorrectas);
-
-  fetch("https://script.google.com/macros/s/AKfycbwO7SThPvbT4mbpjTEI3x24adojCJKt14q50KPYSZHBQ80Hd-5H3CucrSHj9qfvUiUF/exec", {
+  fetch("https://script.google.com/macros/u/2/s/AKfycbz87gFIqByFWhVFMjhYRO3ZhLPheEEMRUADit-_8knvl7awYGWDb2M0SxkDTQkf3NAzlQ/exec", {
     method: "POST",
     mode: "no-cors",
     body: formData
