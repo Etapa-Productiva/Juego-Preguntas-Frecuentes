@@ -127,6 +127,7 @@ function mostrarPregunta() {
   pregunta.opciones.forEach((opcion, index) => {
     const boton = document.createElement("button");
     boton.textContent = opcion;
+    boton.disabled = false;
     boton.onclick = () => verificarRespuesta(index);
     opciones.appendChild(boton);
   });
@@ -138,6 +139,10 @@ function mostrarPregunta() {
 
 function verificarRespuesta(index) {
   const pregunta = preguntas[preguntaActual];
+
+  const botones = document.querySelectorAll("#opciones button");
+  botones.forEach(btn => btn.disabled = true);
+  
   if (index === pregunta.respuesta) {
     puntaje++;
     respuestasCorrectas++;
