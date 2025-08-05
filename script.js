@@ -63,8 +63,10 @@ function mostrarPantallaJuego() {
   document.getElementById("pantalla-juego").classList.remove("oculto");
   document.getElementById("puntaje").textContent = puntaje;
   document.getElementById("tiempo-total").textContent = formatearTiempo(tiempoTotal);
-  iniciarTemporizadores();
-  mostrarPregunta();
+  iniciarTiempoTotal();  // ✅ Solo una vez en toda la partida
+  mostrarPregunta();     // ✅ Muestra la primera pregunta
+  iniciarTiempoPregunta(); // ✅ Arranca tiempo de la primera pregunta
+
 }
 
 function cargarPreguntasDesdeFirebase(callback) {
@@ -88,21 +90,30 @@ function cargarPreguntasDesdeFirebase(callback) {
     });
 }
 
-function iniciarTemporizadores() {
+function iniciarTiempoTotal() {
   intervaloTotal = setInterval(() => {
     tiempoTotal--;
     document.getElementById("tiempo-total").textContent = formatearTiempo(tiempoTotal);
+
     if (tiempoTotal <= 0) {
       clearInterval(intervaloTotal);
       clearInterval(intervaloPregunta);
       finalizarJuego();
     }
   }, 1000);
+}
+
+function iniciarTiempoPregunta() {
+  clearInterval(intervaloPregunta); // ✅ Limpiar antes de iniciar
+  tiempoPregunta = 55;
+  document.getElementById("tiempo-pregunta").textContent = tiempoPregunta;
 
   intervaloPregunta = setInterval(() => {
     tiempoPregunta--;
     document.getElementById("tiempo-pregunta").textContent = tiempoPregunta;
+
     if (tiempoPregunta <= 0) {
+      clearInterval(intervaloPregunta);
       respuestasIncorrectas++;
       mostrarRetroalimentacion("⏱️ ¡Tiempo agotado! Respuesta incorrecta.");
       avanzarPregunta();
@@ -160,17 +171,19 @@ function mostrarRetroalimentacion(texto) {
 }
 
 function avanzarPregunta() {
-  clearInterval(intervaloPregunta);
+  clearInterval(intervaloPregunta); // ✅ detiene el tiempo de la pregunta
+
   setTimeout(() => {
     preguntaActual++;
     if (preguntaActual < preguntas.length) {
       mostrarPregunta();
-      iniciarTemporizadores(); // reinicia solo pregunta
+      iniciarTiempoPregunta(); // ✅ Solo reinicia tiempo de pregunta
     } else {
       finalizarJuego();
     }
   }, 2000);
 }
+
 
 function finalizarJuego() {
   if (resultadoEnviado) return;
