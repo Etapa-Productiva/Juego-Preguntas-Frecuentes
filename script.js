@@ -34,9 +34,10 @@ function guardarNombre() {
   const ficha = document.getElementById("numero-ficha").value.trim();
   const programa = document.getElementById("nombre-programa").value.trim();
   const correo = document.getElementById("correo-usuario").value.trim();
-  nombreInstructor = document.getElementById("instructor").value.trim(); // ✅ Captura solo valor
+  nombreInstructor = document.getElementById("instructor").value.trim();
   const autorizacion = document.getElementById("autorizacion").checked;
 
+  // Validaciones básicas
   if (!nombre || !documento || !ficha || !programa || !correo || !nombreInstructor) {
     alert("Por favor, completa todos los campos.");
     return;
@@ -46,17 +47,54 @@ function guardarNombre() {
     return;
   }
 
+  // Guardamos los datos globales
   nombreJugador = nombre;
   numeroFicha = ficha;
   correoUsuario = correo;
   numeroDocumento = documento;
   nombrePrograma = programa;
 
-  cargarPreguntasDesdeFirebase(() => {
-    document.getElementById("pantalla-nombre").classList.add("oculto");
-    document.getElementById("pantalla-temas").classList.remove("oculto");
+  // ---- 🔹 VALIDACIÓN DE INTENTOS DIARIOS 🔹 ----
+  function fechaActual() {
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  const fecha = fechaActual();
+  const refIntentos = firebase.database().ref(`intentos/${numeroDocumento}/${fecha}`);
+
+  refIntentos.get().then(snapshot => {
+    let intentosHoy = snapshot.val() || 0;
+
+    if (intentosHoy >= 3) {
+      alert("❌ Ya alcanzaste el límite de 3 intentos para hoy. Intenta mañana nuevamente.");
+      return; // 🚫 No deja jugar
+    }
+
+    // Aumentamos y guardamos el intento
+    intentosHoy++;
+    refIntentos.set(intentosHoy);
+
+    // Mensaje de estado al aprendiz
+    if (intentosHoy === 1) {
+      alert("✅ Intento #1 de 3 hoy. ¡Suerte!");
+    } else if (intentosHoy === 2) {
+      alert("⚡ Intento #2 de 3 hoy. ¡Aprovecha bien!");
+    } else if (intentosHoy === 3) {
+      alert("🚨 Este es tu último intento de hoy (#3 de 3).");
+    }
+
+    // Pasar a la selección de temas
+    cargarPreguntasDesdeFirebase(() => {
+      document.getElementById("pantalla-nombre").classList.add("oculto");
+      document.getElementById("pantalla-temas").classList.remove("oculto");
+    });
   });
 }
+
 
 function mostrarPantallaJuego() {
   document.getElementById("pantalla-temas").classList.add("oculto");
