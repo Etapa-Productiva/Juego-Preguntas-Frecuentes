@@ -14,6 +14,9 @@ let tiempoPregunta = 55;
 let intervaloTotal, intervaloPregunta;
 let resultadoEnviado = false;
 
+// URL de tu Web App de Apps Script unificada
+const WEBAPP_URL = "https://script.google.com/macros/u/2/s/AKfycbz87gFIqByFWhVFMjhYRO3ZhLPheEEMRUADit-_8knvl7awYGWDb2M0SxkDTQkf3NAzlQ/exec";
+
 // Mostrar pantallas
 function mostrarInstrucciones() {
   document.getElementById("pantalla-inicio").classList.add("oculto");
@@ -31,11 +34,10 @@ function guardarNombre() {
   const ficha = document.getElementById("numero-ficha").value.trim();
   const programa = document.getElementById("nombre-programa").value.trim();
   const correo = document.getElementById("correo-usuario").value.trim();
-  nombreInstructor = document.getElementById("instructor").value.trim(); 
+  nombreInstructor = document.getElementById("instructor").value.trim(); // ✅ Captura solo valor
   const autorizacion = document.getElementById("autorizacion").checked;
-  const tyc = document.getElementById("tyc").checked;
 
-  if (!nombre || !documento || !ficha || !programa || !correo) {
+  if (!nombre || !documento || !ficha || !programa || !correo || !nombreInstructor) {
     alert("Por favor, completa todos los campos.");
     return;
   }
@@ -49,8 +51,6 @@ function guardarNombre() {
   correoUsuario = correo;
   numeroDocumento = documento;
   nombrePrograma = programa;
-  nombreInstructor = instructor;
-
 
   cargarPreguntasDesdeFirebase(() => {
     document.getElementById("pantalla-nombre").classList.add("oculto");
@@ -109,7 +109,6 @@ function iniciarTemporizadores() {
     }
   }, 1000);
 }
-
 
 function mostrarPregunta() {
   const pregunta = preguntas[preguntaActual];
@@ -187,13 +186,7 @@ function finalizarJuego() {
   document.getElementById("incorrectas").textContent = respuestasIncorrectas;
 
   guardarResultadoFirebase();
-  enviarDatosUnificados();
-
-  if (porcentaje >= 80) {
-    alert("✅ Tu certificado será enviado a tu correo.");
-  } else {
-    alert("Debes acertar al menos el 80% para obtener el certificado.");
-  }
+  enviarDatosUnificados(porcentaje);
 }
 
 function guardarResultadoFirebase() {
@@ -204,6 +197,7 @@ function guardarResultadoFirebase() {
     ficha: numeroFicha,
     programa: nombrePrograma,
     correo: correoUsuario,
+    instructor: nombreInstructor,
     puntaje: puntaje,
     correctas: respuestasCorrectas,
     incorrectas: respuestasIncorrectas,
@@ -211,23 +205,32 @@ function guardarResultadoFirebase() {
   });
 }
 
-function enviarDatosUnificados() {
+function enviarDatosUnificados(porcentaje) {
+  // Enviar siempre, el Apps Script decidirá si emite certificado
+  const fecha = new Date().toLocaleString();
   const formData = new FormData();
-  formData.append("entry.1074037193", nombreJugador);      // Nombre
-  formData.append("entry.760554111", numeroDocumento);     // Documento
-  formData.append("entry.1436076378", numeroFicha);        // Ficha
-  formData.append("entry.480386414", nombrePrograma);      // Programa
-  formData.append("entry.446350167", correoUsuario);       // Correo
-  formData.append("entry.1952037755", nombreInstructor);   // Instructor
-  formData.append("entry.1279592004", puntaje);            // Puntaje
-  formData.append("entry.2118980774", respuestasCorrectas);// Correctas
-  formData.append("entry.1770889491", respuestasIncorrectas);// Incorrectas
+  formData.append("entry.1074037193", nombreJugador);
+  formData.append("entry.760554111", numeroDocumento);
+  formData.append("entry.1436076378", numeroFicha);
+  formData.append("entry.480386414", nombrePrograma);
+  formData.append("entry.446350167", correoUsuario);
+  formData.append("entry.1952037755", nombreInstructor);
+  formData.append("entry.1279592004", puntaje);
+  formData.append("entry.2118980774", respuestasCorrectas);
+  formData.append("entry.1770889491", respuestasIncorrectas);
+  formData.append("entry.9999999999", fecha); // ✅ Campo para fecha si quieres usarlo
 
-  fetch("https://script.google.com/macros/s/AKfycbww6n5_OZzae-S_juq3QoMY_F9NZTU-1RVQypIZwMomtWO61Hh_jxvKOmnhzP2gne2IDw/exec", {
+  fetch(WEBAPP_URL, {
     method: "POST",
     mode: "no-cors",
     body: formData
   });
+
+  if (porcentaje >= 80) {
+    alert("✅ Tu certificado será enviado a tu correo.");
+  } else {
+    alert("Debes acertar al menos el 80% para obtener el certificado.");
+  }
 }
 
 function formatearTiempo(segundos) {
@@ -235,8 +238,6 @@ function formatearTiempo(segundos) {
   const seg = segundos % 60;
   return `${min.toString().padStart(2, "0")}:${seg.toString().padStart(2, "0")}`;
 }
-
-
 
 function volverAlInicio() {
   location.reload();
