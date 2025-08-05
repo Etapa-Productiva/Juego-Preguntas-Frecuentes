@@ -223,7 +223,7 @@ function enviarDatosUnificados() {
   formData.append("entry.2118980774", respuestasCorrectas);// Correctas
   formData.append("entry.1770889491", respuestasIncorrectas);// Incorrectas
 
-  fetch("https://script.google.com/macros/u/2/s/AKfycbz87gFIqByFWhVFMjhYRO3ZhLPheEEMRUADit-_8knvl7awYGWDb2M0SxkDTQkf3NAzlQ/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbww6n5_OZzae-S_juq3QoMY_F9NZTU-1RVQypIZwMomtWO61Hh_jxvKOmnhzP2gne2IDw/exec", {
     method: "POST",
     mode: "no-cors",
     body: formData
