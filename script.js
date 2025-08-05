@@ -208,22 +208,25 @@ function guardarResultadoFirebase() {
 function enviarDatosUnificados(porcentaje) {
   const fecha = new Date().toLocaleString();
 
-  const data = new URLSearchParams();
-  data.append("entry.1074037193", nombreJugador);
-  data.append("entry.760554111", numeroDocumento);
-  data.append("entry.1436076378", numeroFicha);
-  data.append("entry.480386414", nombrePrograma);
-  data.append("entry.446350167", correoUsuario);
-  data.append("entry.1952037755", nombreInstructor);
-  data.append("entry.1279592004", puntaje);
-  data.append("entry.2118980774", respuestasCorrectas);
-  data.append("entry.1770889491", respuestasIncorrectas);
-  //data.append("entry.9999999999", fecha); // fecha opcional
+  const bodyData = new URLSearchParams({
+    "entry.1074037193": nombreJugador,
+    "entry.760554111": numeroDocumento,
+    "entry.1436076378": numeroFicha,
+    "entry.480386414": nombrePrograma,
+    "entry.446350167": correoUsuario,
+    "entry.1952037755": nombreInstructor,
+    "entry.1279592004": puntaje,
+    "entry.2118980774": respuestasCorrectas,
+    "entry.1770889491": respuestasIncorrectas,
+    //"entry.9999999999": fecha
+  });
 
   fetch(WEBAPP_URL, {
     method: "POST",
-    mode: "no-cors",
-    body: data,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded", // ✅ clave
+    },
+    body: bodyData.toString(),
   });
 
   if (porcentaje >= 80) {
