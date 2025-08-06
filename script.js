@@ -310,13 +310,6 @@ function enviarDatosUnificados(porcentaje, duracion, promedio, estado) {
   });
 }
 
-  if (porcentaje >= 80) {
-    alert("✅ Tu certificado será enviado a tu correo.");
-  } else {
-    alert("Debes acertar al menos el 80% para obtener el certificado.");
-  }
-}
-
 function formatearTiempo(segundos) {
   const min = Math.floor(segundos / 60);
   const seg = segundos % 60;
