@@ -95,10 +95,12 @@ function guardarNombre() {
   });
 }
 
+let inicioJuego = null;
 
 function mostrarPantallaJuego() {
   document.getElementById("pantalla-temas").classList.add("oculto");
   document.getElementById("pantalla-juego").classList.remove("oculto");
+  inicioJuego = Date.now(); // ✅ Marca inicio de intento
   document.getElementById("puntaje").textContent = puntaje;
   document.getElementById("tiempo-total").textContent = formatearTiempo(tiempoTotal);
   iniciarTiempoTotal();  // ✅ Solo una vez en toda la partida
@@ -227,9 +229,17 @@ function finalizarJuego() {
   if (resultadoEnviado) return;
   resultadoEnviado = true;
 
-  const porcentaje = (respuestasCorrectas / preguntas.length) * 100;
-  document.getElementById("porcentaje-final").textContent = porcentaje.toFixed(2);
+  // ⏱ Calculamos tiempos
+  const finJuego = Date.now();
+  const duracionSegundos = Math.round((finJuego - inicioJuego) / 1000); // tiempo total en segundos
+  const promedioPregunta = (duracionSegundos / preguntas.length).toFixed(2);
 
+  // ✅ Calculamos porcentaje y estado
+  const porcentaje = (respuestasCorrectas / preguntas.length) * 100;
+  const estado = porcentaje >= 80 ? "Aprobado" : "Reprobado";
+
+  // 🖥️ Mostrar en pantalla final
+  document.getElementById("porcentaje-final").textContent = porcentaje.toFixed(2);
   clearInterval(intervaloTotal);
   clearInterval(intervaloPregunta);
   document.getElementById("pantalla-juego").classList.add("oculto");
@@ -241,11 +251,19 @@ function finalizarJuego() {
   document.getElementById("correctas").textContent = respuestasCorrectas;
   document.getElementById("incorrectas").textContent = respuestasIncorrectas;
 
-  guardarResultadoFirebase();
-  enviarDatosUnificados(porcentaje);
+  // ✅ Guardar en Firebase y Sheets con nuevos datos
+  guardarResultadoFirebase(duracionSegundos, promedioPregunta, estado);
+  enviarDatosUnificados(porcentaje, duracionSegundos, promedioPregunta, estado);
+
+  // ✅ Mensaje final
+  if (porcentaje >= 80) {
+    alert("✅ Tu certificado será enviado a tu correo.");
+  } else {
+    alert("Debes acertar al menos el 80% para obtener el certificado.");
+  }
 }
 
-function guardarResultadoFirebase() {
+function guardarResultadoFirebase(duracion, promedio, estado) {
   const jugadorRef = firebase.database().ref("jugadores").push();
   jugadorRef.set({
     nombre: nombreJugador,
@@ -257,9 +275,14 @@ function guardarResultadoFirebase() {
     puntaje: puntaje,
     correctas: respuestasCorrectas,
     incorrectas: respuestasIncorrectas,
+    porcentaje: ((respuestasCorrectas/preguntas.length)*100).toFixed(2),
+    estado: estado, // ✅ Aprobado o Reprobado
+    duracion: duracion, // en segundos
+    promedioPregunta: promedio, 
     fecha: new Date().toLocaleString()
   });
 }
+
 
 function enviarDatosUnificados(porcentaje) {
   const fecha = new Date().toLocaleString();
