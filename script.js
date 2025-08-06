@@ -284,29 +284,33 @@ function guardarResultadoFirebase(duracion, promedio, estado) {
 }
 
 
-function enviarDatosUnificados(porcentaje) {
+function enviarDatosUnificados(porcentaje, duracion, promedio, estado) {
   const fecha = new Date().toLocaleString();
 
   const bodyData = new URLSearchParams({
-    "entry.1074037193": nombreJugador,
-    "entry.760554111": numeroDocumento,
-    "entry.1436076378": numeroFicha,
-    "entry.480386414": nombrePrograma,
-    "entry.446350167": correoUsuario,
-    "entry.1952037755": nombreInstructor,
-    "entry.1279592004": puntaje,
-    "entry.2118980774": respuestasCorrectas,
-    "entry.1770889491": respuestasIncorrectas,
-    //"entry.9999999999": fecha
+    "entry.1074037193": nombreJugador,       // Nombre
+    "entry.760554111": numeroDocumento,      // Documento
+    "entry.1436076378": numeroFicha,         // Ficha
+    "entry.480386414": nombrePrograma,       // Programa
+    "entry.446350167": correoUsuario,        // Correo
+    "entry.1952037755": nombreInstructor,    // Instructor
+    "entry.1279592004": puntaje,             // Puntaje
+    "entry.2118980774": respuestasCorrectas, // Correctas
+    "entry.1770889491": respuestasIncorrectas,// Incorrectas
+    "duracion": duracion,                    // ⏱ Tiempo total (segundos)
+    "promedio": promedio,                    // ⏱ Tiempo promedio por pregunta
+    "estado": estado,                        // ✅ Aprobado/Reprobado
+    "fecha": fecha                           // 📅 Fecha del intento
   });
 
   fetch(WEBAPP_URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded", // ✅ clave
+      "Content-Type": "application/x-www-form-urlencoded",
     },
     body: bodyData.toString(),
   });
+}
 
   if (porcentaje >= 80) {
     alert("✅ Tu certificado será enviado a tu correo.");
