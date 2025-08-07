@@ -1,30 +1,54 @@
+/*************************************************************
+ *  PANEL ADMINISTRADOR - LÓGICA PRINCIPAL
+ *  Autor: Gabriel Otálora
+ *  Funciones:
+ *    - Autenticación de administradores
+ *    - Control de fechas de habilitación del juego
+ *    - Búsqueda de certificados
+ *    - Visualización de informes
+ *************************************************************/
+
+/* =========================================================
+   LOGIN DEL ADMINISTRADOR
+   ========================================================= */
 function loginAdministrador() {
+  // Obtener valores de correo y clave ingresados
   const correo = document.getElementById("admin-correo").value.trim();
   const clave = document.getElementById("admin-clave").value.trim();
   const mensaje = document.getElementById("mensaje-login");
 
+  // Autenticación con Firebase Authentication
   firebase.auth().signInWithEmailAndPassword(correo, clave)
     .then(() => {
-      mensaje.textContent = "";
-      mostrarPanelAdmin();
+      mensaje.textContent = ""; // Limpia mensajes previos
+      mostrarPanelAdmin(); // Muestra el panel si el login es correcto
     })
     .catch(error => {
+      // Mensaje de error si las credenciales no son válidas
       mensaje.textContent = "❌ Acceso denegado. Verifica tus credenciales.";
       console.error(error);
     });
 }
 
+/* =========================================================
+   MOSTRAR PANEL ADMINISTRATIVO
+   ========================================================= */
 function mostrarPanelAdmin() {
   document.getElementById("pantalla-login-admin").classList.add("oculto");
   document.getElementById("pantalla-admin").classList.remove("oculto");
-  cargarFechas();
+  cargarFechas(); // Cargar las fechas guardadas del juego
 }
 
+/* =========================================================
+   CERRAR SESIÓN DEL ADMINISTRADOR
+   ========================================================= */
 function cerrarSesion() {
   firebase.auth().signOut().then(() => location.reload());
 }
 
-// Verificar si hay sesión activa
+/* =========================================================
+   MANTENER SESIÓN ACTIVA SI YA ESTÁ LOGUEADO
+   ========================================================= */
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     mostrarPanelAdmin();
@@ -33,15 +57,20 @@ firebase.auth().onAuthStateChanged(user => {
   }
 });
 
-// 🔄 Leer fechas desde Firebase
+/* =========================================================
+   CARGAR FECHAS DEL JUEGO DESDE FIREBASE
+   ========================================================= */
 function cargarFechas() {
   const ref = firebase.database().ref("configuracionJuego");
+
   ref.once("value").then(snapshot => {
     const data = snapshot.val();
     if (data) {
+      // Mostrar fechas guardadas en los inputs
       document.getElementById("fecha-inicio").value = data.fechaInicio || "";
       document.getElementById("fecha-fin").value = data.fechaFin || "";
 
+      // Comprobar si el juego está activo en la fecha actual
       const hoy = new Date().toISOString().split("T")[0];
       const activo = hoy >= data.fechaInicio && hoy <= data.fechaFin;
       document.getElementById("estado-juego").textContent = activo
@@ -51,16 +80,20 @@ function cargarFechas() {
   });
 }
 
-// 💾 Guardar fechas
+/* =========================================================
+   GUARDAR RANGO DE FECHAS EN FIREBASE
+   ========================================================= */
 function guardarRangoFechas() {
   const inicio = document.getElementById("fecha-inicio").value;
   const fin = document.getElementById("fecha-fin").value;
 
+  // Validar que ambas fechas se hayan ingresado
   if (!inicio || !fin) {
     alert("Debes seleccionar ambas fechas.");
     return;
   }
 
+  // Guardar en Firebase Realtime Database
   firebase.database().ref("configuracionJuego").set({
     fechaInicio: inicio,
     fechaFin: fin
@@ -70,14 +103,20 @@ function guardarRangoFechas() {
   });
 }
 
+/* =========================================================
+   BUSCAR CERTIFICADO POR DOCUMENTO O NÚMERO DE CERTIFICADO
+   ========================================================= */
 function buscarCertificado() {
   const valor = document.getElementById("inputBusqueda").value.trim();
   const resultadoDiv = document.getElementById("resultadoCertificado");
+
   resultadoDiv.innerHTML = "Buscando...";
 
   firebase.database().ref("jugadores").once("value")
     .then(snapshot => {
       const jugadores = snapshot.val();
+
+      // Validar que existan registros
       if (!jugadores) {
         resultadoDiv.innerHTML = "❌ No se encontraron registros.";
         return;
@@ -85,6 +124,7 @@ function buscarCertificado() {
 
       const coincidencias = [];
 
+      // Buscar coincidencias por documento o número de certificado
       for (let id in jugadores) {
         const jugador = jugadores[id];
         if (
@@ -95,6 +135,7 @@ function buscarCertificado() {
         }
       }
 
+      // Si se encuentran resultados
       if (coincidencias.length > 0) {
         let html = `<h3>🔎 Se encontraron ${coincidencias.length} intento(s):</h3>`;
         html += `
@@ -119,6 +160,7 @@ function buscarCertificado() {
             <tbody>
         `;
 
+        // Recorrer y mostrar cada resultado
         coincidencias.forEach((jugador, index) => {
           html += `
             <tr>
@@ -149,7 +191,9 @@ function buscarCertificado() {
         `;
 
         resultadoDiv.innerHTML = html;
-      } else {
+      } 
+      // Si no se encontraron coincidencias
+      else {
         resultadoDiv.innerHTML = "❌ No se encontró ningún registro con ese dato.";
       }
     })
@@ -159,6 +203,9 @@ function buscarCertificado() {
     });
 }
 
+/* =========================================================
+   MOSTRAR U OCULTAR EL INFORME EMBEBIDO
+   ========================================================= */
 function mostrarInforme(boton) {
   const contenedor = document.getElementById("contenedor-informe");
 
