@@ -159,11 +159,14 @@ function buscarCertificado() {
     });
 }
 
-function mostrarInforme() {
+function mostrarInforme(boton) {
   const contenedor = document.getElementById("contenedor-informe");
+
   if (contenedor.style.display === "none") {
     contenedor.style.display = "block";
+    boton.textContent = "❌ Ocultar Informe";
   } else {
     contenedor.style.display = "none";
+    boton.textContent = "📊 Ver Informe";
   }
 }
