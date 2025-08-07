@@ -9,14 +9,22 @@
 <body>
   <div class="main-layout">
 
-    <!-- 🔐 LOGIN ADMIN -->
+    <!-- 🔐 PANTALLA DE LOGIN ADMINISTRADOR -->
     <section id="pantalla-login-admin" class="pantalla">
       <div class="columna">
         <h2>🔐 Acceso Administrador</h2>
+
+        <!-- Campos de acceso -->
         <input type="email" id="admin-correo" placeholder="Correo del administrador" required />
         <input type="password" id="admin-clave" placeholder="Contraseña" required />
+
+        <!-- Botón para iniciar sesión -->
         <button onclick="loginAdministrador()">Ingresar</button>
+
+        <!-- Mensaje de error en el login -->
         <p id="mensaje-login" style="color: red;"></p>
+
+        <!-- Créditos del desarrollador -->
         <div class="autor">
           <span>by Gabriel Otálora</span>
           <a href="https://www.linkedin.com/in/gabriel-otalora-5a0290303/" target="_blank">
@@ -29,31 +37,37 @@
       </div>
     </section>
 
-    <!-- 🛠️ PANEL ADMINISTRADOR -->
+    <!-- 🛠️ PANTALLA DEL PANEL DE ADMINISTRACIÓN -->
     <section id="pantalla-admin" class="pantalla oculto">
       <div class="columna">
 
-        <!-- 📌 Botones superiores -->
+        <!-- 📌 BOTONES SUPERIORES: Cerrar sesión e ir al informe -->
         <div class="botones-superiores">
           <button onclick="cerrarSesion()">Cerrar sesión</button>
           <button onclick="window.location.href='informe.html'">📊 Ver Informe</button>
         </div>
 
-        <!-- 🎮 Estado del juego -->
+        <!-- 🎮 BLOQUE: Estado y control del juego -->
         <div class="bloque-admin">
           <h3>🎮 Estado del juego</h3>
           <p id="estado-juego">Cargando estado...</p>
+
+          <!-- Selección de fechas -->
           <label>Activar juego desde: <input type="date" id="fecha-inicio" /></label>
           <label>Hasta: <input type="date" id="fecha-fin" /></label>
+
+          <!-- Botón para guardar rango de fechas -->
           <button onclick="guardarRangoFechas()">Guardar rango</button>
         </div>
 
-        <!-- 🔍 Buscar Certificado -->
+        <!-- 🔍 BLOQUE: Buscar Certificado -->
         <h3>🔍 Buscar Certificado</h3>
         <input type="text" id="inputBusqueda" placeholder="Documento o No. Certificado" />
         <button onclick="buscarCertificado()">Buscar</button>
+
+        <!-- Contenedor de resultados -->
         <div id="resultadoCertificado" style="margin-top: 20px;">
-          <!-- Aquí aparecerá la tabla con los resultados -->
+          <!-- Tabla donde se mostrarán los certificados encontrados -->
           <table id="tablaCertificado" style="width:100%; border-collapse: collapse; margin-top: 10px; display: none;">
             <thead>
               <tr>
@@ -72,12 +86,12 @@
               </tr>
             </thead>
             <tbody id="tablaCertificadoBody">
-              <!-- JS llenará los datos aquí -->
+              <!-- JS llenará los datos aquí dinámicamente -->
             </tbody>
           </table>
         </div>
 
-        <!-- 👥 Usuarios administradores -->
+        <!-- 👥 BLOQUE: Información sobre administradores -->
         <div class="bloque-admin">
           <h3>👥 Usuarios administradores </h3>
           <p>Desde Firebase Authentication puedes agregar más admins.</p>
@@ -88,11 +102,12 @@
 
   </div>
 
-  <!-- 🔥 Firebase -->
+  <!-- 🔥 Configuración de Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script>
+    // Configuración del proyecto Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDnQmokqGYHPpMTYZxMlKylxHpy6LnDpyk",
       authDomain: "data-user-juego-ep.firebaseapp.com",
@@ -102,10 +117,12 @@
       messagingSenderId: "238908862819",
       appId: "1:238908862819:web:218bf159e1903bf1c96356"
     };
+
+    // Inicializar Firebase
     firebase.initializeApp(firebaseConfig);
   </script>
 
-  <!-- Tu JS -->
+  <!-- 📜 Lógica principal del administrador -->
   <script src="admin.js"></script>
 </body>
 </html>
