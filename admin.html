@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administración</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="admin-container">
+    <h2>🔐 Ingreso Administrador</h2>
+    <input type="text" id="usuario" placeholder="Usuario">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="iniciarSesion()">Ingresar</button>
+    
+    <div id="panel" style="display: none; margin-top: 30px;">
+      <h3>🎫 Validar Certificado</h3>
+      <input type="text" id="certificado" placeholder="No. Certificado">
+      <input type="text" id="documento" placeholder="No. Documento">
+      <button onclick="buscarCertificado()">Validar</button>
+      <p id="resultado-validacion"></p>
+
+      <hr/>
+
+      <h3>🎮 Activar o desactivar juego</h3>
+      <label>
+        <input type="checkbox" id="estado-juego" onchange="cambiarEstadoJuego()">
+        Activar juego
+      </label>
+      <p id="estado-juego-texto"></p>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDnQmokqGYHPpMTYZxMlKylxHpy6LnDpyk",
+      authDomain: "data-user-juego-ep.firebaseapp.com",
+      databaseURL: "https://data-user-juego-ep-default-rtdb.firebaseio.com",
+      projectId: "data-user-juego-ep",
+      storageBucket: "data-user-juego-ep.appspot.com",
+      messagingSenderId: "238908862819",
+      appId: "1:238908862819:web:218bf159e1903bf1c96356"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+    function iniciarSesion() {
+      const u = document.getElementById("usuario").value;
+      const p = document.getElementById("password").value;
+      if (u === "admin" && p === "etapa2025") {
+        document.getElementById("panel").style.display = "block";
+        cargarEstadoJuego();
+      } else {
+        alert("Usuario o contraseña incorrectos.");
+      }
+    }
+
+    function buscarCertificado() {
+      const cert = document.getElementById("certificado").value.trim();
+      const doc = document.getElementById("documento").value.trim();
+      const resultado = document.getElementById("resultado-validacion");
+
+      firebase.database().ref("jugadores").once("value").then(snapshot => {
+        let valido = false;
+        snapshot.forEach(child => {
+          const data = child.val();
+          if (data.documento === doc && data.no_certificado === cert) {
+            resultado.innerHTML = `✅ Válido - ${data.nombre} - ${data.fecha}`;
+            valido = true;
+          }
+        });
+        if (!valido) resultado.innerHTML = "❌ Certificado no encontrado.";
+      });
+    }
+
+    function cambiarEstadoJuego() {
+      const estado = document.getElementById("estado-juego").checked;
+      firebase.database().ref("configuracion/juego_activo").set(estado);
+      document.getElementById("estado-juego-texto").textContent =
+        estado ? "Juego ACTIVADO" : "Juego DESACTIVADO";
+    }
+
+    function cargarEstadoJuego() {
+      firebase.database().ref("configuracion/juego_activo").once("value")
+        .then(snap => {
+          const activo = snap.val();
+          document.getElementById("estado-juego").checked = !!activo;
+          document.getElementById("estado-juego-texto").textContent =
+            activo ? "Juego ACTIVADO" : "Juego DESACTIVADO";
+        });
+    }
+  </script>
+</body>
+</html>
