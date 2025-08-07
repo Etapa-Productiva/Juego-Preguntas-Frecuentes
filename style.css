@@ -310,26 +310,3 @@ iframe {
   border-radius: 8px;
 }
 
-.botones-superiores {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.botones-superiores button {
-  background-color: #00c853;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.botones-superiores button:hover {
-  background-color: #009624;
-}
-
