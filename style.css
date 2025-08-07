@@ -310,3 +310,15 @@ iframe {
   border-radius: 8px;
 }
 
+.botones-superiores {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.botones-superiores button {
+  flex: 1;
+  max-width: 200px;
+}
+
