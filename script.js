@@ -47,53 +47,60 @@ function guardarNombre() {
     return;
   }
 
-  // Guardamos los datos globales
+  // Guardamos datos globales
   nombreJugador = nombre;
   numeroFicha = ficha;
   correoUsuario = correo;
   numeroDocumento = documento;
   nombrePrograma = programa;
 
-  // ---- 🔹 VALIDACIÓN DE INTENTOS DIARIOS 🔹 ----
-  function fechaActual() {
-    const hoy = new Date();
-    const yyyy = hoy.getFullYear();
-    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
-    const dd = String(hoy.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  }
+  // ⏱️ Validar fecha de juego
+  firebase.database().ref("configuracionJuego").once("value").then(snapshot => {
+    const config = snapshot.val();
+    const hoy = new Date().toISOString().split("T")[0]; // yyyy-mm-dd
 
-  const fecha = fechaActual();
-  const refIntentos = firebase.database().ref(`intentos/${numeroDocumento}/${fecha}`);
-
-  refIntentos.get().then(snapshot => {
-    let intentosHoy = snapshot.val() || 0;
-
-    if (intentosHoy >= 3) {
-      alert("❌ Ya alcanzaste el límite de 3 intentos para hoy. Intenta mañana nuevamente.");
-      return; // 🚫 No deja jugar
+    if (!config || hoy < config.fechaInicio || hoy > config.fechaFin) {
+      alert("⛔ El juego no está habilitado en esta fecha. Por favor, consulta con tu instructor.");
+      return;
     }
 
-    // Aumentamos y guardamos el intento
-    intentosHoy++;
-    refIntentos.set(intentosHoy);
+    // 🔁 Si la fecha es válida, validar intentos
+    const fechaActual = () => {
+      const hoy = new Date();
+      const yyyy = hoy.getFullYear();
+      const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+      const dd = String(hoy.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    };
 
-    // Mensaje de estado al aprendiz
-    if (intentosHoy === 1) {
-      alert("✅ Intento #1 de 3 hoy. ¡Suerte!");
-    } else if (intentosHoy === 2) {
-      alert("⚡ Intento #2 de 3 hoy. ¡Aprovecha bien!");
-    } else if (intentosHoy === 3) {
-      alert("🚨 Este es tu último intento de hoy (#3 de 3).");
-    }
+    const fecha = fechaActual();
+    const refIntentos = firebase.database().ref(`intentos/${numeroDocumento}/${fecha}`);
 
-    // Pasar a la selección de temas
-    cargarPreguntasDesdeFirebase(() => {
-      document.getElementById("pantalla-nombre").classList.add("oculto");
-      document.getElementById("pantalla-temas").classList.remove("oculto");
+    refIntentos.get().then(snapshot => {
+      let intentosHoy = snapshot.val() || 0;
+
+      if (intentosHoy >= 3) {
+        alert("❌ Ya alcanzaste el límite de 3 intentos para hoy. Intenta mañana nuevamente.");
+        return;
+      }
+
+      // Guardar intento
+      intentosHoy++;
+      refIntentos.set(intentosHoy);
+
+      if (intentosHoy === 1) alert("✅ Intento #1 de 3 hoy. ¡Suerte!");
+      if (intentosHoy === 2) alert("⚡ Intento #2 de 3 hoy. ¡Aprovecha bien!");
+      if (intentosHoy === 3) alert("🚨 Último intento del día (#3 de 3).");
+
+      // Mostrar temas
+      cargarPreguntasDesdeFirebase(() => {
+        document.getElementById("pantalla-nombre").classList.add("oculto");
+        document.getElementById("pantalla-temas").classList.remove("oculto");
+      });
     });
   });
 }
+
 
 let inicioJuego = null;
 
