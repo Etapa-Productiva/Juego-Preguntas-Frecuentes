@@ -45,7 +45,31 @@
        <h3>🔍 Buscar Certificado</h3>
        <input type="text" id="inputBusqueda" placeholder="Documento o No. Certificado" />
        <button onclick="buscarCertificado()">Buscar</button>
-       <div id="resultadoCertificado" style="margin-top: 20px;"></div>
+       <div id="resultadoCertificado" style="margin-top: 20px;">
+  <!-- Aquí aparecerá la tabla con los resultados -->
+  <table id="tablaCertificado" style="width:100%; border-collapse: collapse; margin-top: 10px; display: none;">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Documento</th>
+        <th>Correo</th>
+        <th>Programa</th>
+        <th>Instructor</th>
+        <th>Certificado</th>
+        <th>Fecha</th>
+        <th>Puntaje</th>
+        <th>Correctas</th>
+        <th>Incorrectas</th>
+        <th>Estado</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody id="tablaCertificadoBody">
+      <!-- JS llenará los datos aquí -->
+    </tbody>
+  </table>
+</div>
+
 
 
       <div class="bloque-admin">
