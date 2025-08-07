@@ -29,27 +29,25 @@
 
   <!-- 🛠️ PANEL ADMINISTRADOR -->
   <section id="pantalla-admin" class="pantalla oculto">
-    <div class="columna">
-      <h2>🛠️ Panel de Administración</h2>
-      <button onclick="cerrarSesion()">Cerrar sesión</button>
-
-      <!-- 📊 Informe Looker Studio -->
-<div class="bloque-admin">
-  <h3>📊 Informe de Rendimiento</h3>
-  <button onclick="mostrarInforme(this)">Ver Informe</button>
-  
-  <div id="contenedor-informe" style="display:none; margin-top:20px;">
-    <iframe 
-      width="100%" 
-      height="800" 
-      src="https://lookerstudio.google.com/embed/reporting/a9b35784-f204-4a8e-a4dd-71a42a4eb2c3/page/I5rTF" 
-      frameborder="0" 
-      style="border:0;" 
-      allowfullscreen 
-      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-    </iframe>
-  </div>
+    <!-- 📌 Botones superiores -->
+<div class="botones-superiores">
+  <button onclick="cerrarSesion()">Cerrar sesión</button>
+  <button onclick="mostrarInforme(this)">📊 Ver Informe</button>
 </div>
+
+<!-- 📊 Informe Looker Studio -->
+<div id="contenedor-informe" style="display:none; margin-top:20px;">
+  <iframe 
+    width="100%" 
+    height="800" 
+    src="https://lookerstudio.google.com/embed/reporting/a9b35784-f204-4a8e-a4dd-71a42a4eb2c3/page/I5rTF" 
+    frameborder="0" 
+    style="border:0;" 
+    allowfullscreen 
+    sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+  </iframe>
+</div>
+
 
 
       <!-- 🔧 Secciones que activaremos después -->
