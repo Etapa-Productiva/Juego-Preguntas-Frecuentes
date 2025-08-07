@@ -234,5 +234,75 @@ a {
   background-color: #f4f4f4;
 }
 
+/* 📱 Estilos adicionales para responsive */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+    display: block; /* Evita que se desborde en pantallas pequeñas */
+  }
+
+  .columna {
+    width: 100% !important;
+    padding: 12px !important;
+    border-radius: 12px;
+  }
+
+  input,
+  button,
+  select {
+    width: 100% !important;
+    font-size: 1rem;
+    margin: 8px 0;
+  }
+
+  table {
+    font-size: 13px;
+    word-break: break-word;
+  }
+
+  th, td {
+    padding: 6px;
+    text-align: left;
+  }
+
+  .barra-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pantalla {
+    padding: 0 10px;
+  }
+
+  .autor {
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .autor img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .grid-temas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tema-cubo {
+    width: 100% !important;
+    font-size: 24px;
+  }
+
+  .descripcion-tema {
+    width: 90%;
+    font-size: 13px;
+  }
+
+  .tabla-resultados {
+    font-size: 13px;
+  }
+}
 
 
