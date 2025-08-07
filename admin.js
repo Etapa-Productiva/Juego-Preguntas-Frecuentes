@@ -158,3 +158,12 @@ function buscarCertificado() {
       resultadoDiv.innerHTML = "⚠️ Error al buscar la información.";
     });
 }
+
+function mostrarInforme() {
+  const contenedor = document.getElementById("contenedor-informe");
+  if (contenedor.style.display === "none") {
+    contenedor.style.display = "block";
+  } else {
+    contenedor.style.display = "none";
+  }
+}
