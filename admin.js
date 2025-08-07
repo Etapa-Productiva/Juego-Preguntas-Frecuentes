@@ -83,7 +83,6 @@ function buscarCertificado() {
         return;
       }
 
-      // Buscar por documento o número de certificado
       const coincidencias = [];
 
       for (let id in jugadores) {
@@ -96,65 +95,64 @@ function buscarCertificado() {
         }
       }
 
-if (coincidencias.length > 0) {
-  let html = `<h3>🔎 Se encontraron ${coincidencias.length} intento(s):</h3>`;
-  html += `
-    <div style="overflow-x:auto;">
-    <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nombre</th>
-          <th>Documento</th>
-          <th>Programa</th>
-          <th>Puntaje</th>
-          <th>Correctas</th>
-          <th>Incorrectas</th>
-          <th>%</th>
-          <th>Estado</th>
-          <th>Fecha</th>
-          <th>No. Certificado</th>
-          <th>Descargar</th>
-        </tr>
-      </thead>
-      <tbody>
-  `;
+      if (coincidencias.length > 0) {
+        let html = `<h3>🔎 Se encontraron ${coincidencias.length} intento(s):</h3>`;
+        html += `
+          <div style="overflow-x:auto;">
+          <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Programa</th>
+                <th>Puntaje</th>
+                <th>Correctas</th>
+                <th>Incorrectas</th>
+                <th>%</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>No. Certificado</th>
+                <th>Descargar</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
 
-  coincidencias.forEach((jugador, index) => {
-    html += `
-      <tr>
-        <td>${index + 1}</td>
-        <td>${jugador.nombre || ""}</td>
-        <td>${jugador.documento || ""}</td>
-        <td>${jugador.programa || ""}</td>
-        <td>${jugador.puntaje || 0}</td>
-        <td>${jugador.correctas || 0}</td>
-        <td>${jugador.incorrectas || 0}</td>
-        <td>${jugador.porcentaje || 0}%</td>
-        <td>${jugador.estado || ""}</td>
-        <td>${jugador.fecha || ""}</td>
-        <td>${jugador.no_certificado || "N/A"}</td>
-        <td>
-          ${jugador.driveId
-            ? `<a href="https://drive.google.com/uc?export=download&id=${jugador.driveId}" target="_blank">📥</a>`
-            : "—"}
-        </td>
-      </tr>
-    `;
-  });
+        coincidencias.forEach((jugador, index) => {
+          html += `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${jugador.nombre || ""}</td>
+              <td>${jugador.documento || ""}</td>
+              <td>${jugador.programa || ""}</td>
+              <td>${jugador.puntaje || 0}</td>
+              <td>${jugador.correctas || 0}</td>
+              <td>${jugador.incorrectas || 0}</td>
+              <td>${jugador.porcentaje || 0}%</td>
+              <td>${jugador.estado || ""}</td>
+              <td>${jugador.fecha || ""}</td>
+              <td>${jugador.no_certificado || "N/A"}</td>
+              <td>
+                ${jugador.driveId
+                  ? `<a href="https://drive.google.com/uc?export=download&id=${jugador.driveId}" target="_blank">📥</a>`
+                  : "—"}
+              </td>
+            </tr>
+          `;
+        });
 
-  html += `
-      </tbody>
-    </table>
-    </div>
-  `;
+        html += `
+            </tbody>
+          </table>
+          </div>
+        `;
 
-  resultadoDiv.innerHTML = html;
-
-} else {
-  resultadoDiv.innerHTML = "❌ No se encontró ningún registro con ese dato.";
-}
-
+        resultadoDiv.innerHTML = html;
+      } else {
+        resultadoDiv.innerHTML = "❌ No se encontró ningún registro con ese dato.";
+      }
+    })
     .catch(err => {
       console.error(err);
       resultadoDiv.innerHTML = "⚠️ Error al buscar la información.";
