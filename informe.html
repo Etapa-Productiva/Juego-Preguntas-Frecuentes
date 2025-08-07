@@ -3,20 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Informe de Rendimiento</title>
+<title>📊 Informe de Rendimiento</title>
+
 <style>
+  /* ====== ESTILO GENERAL ====== */
   body {
     margin: 0;
-    background: #0f2e25;
+    background: #0f2e25; /* Fondo oscuro elegante */
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
+  /* ====== ESTILO DEL IFRAME ====== */
   iframe {
     border: none;
-    width: 1200px;
-    height: 900px;
+    width: 1200px;  /* Tamaño original del reporte */
+    height: 900px;  /* Altura del reporte */
+    border-radius: 8px;
   }
+
+  /* ====== BOTÓN DE VOLVER ====== */
   .volver {
     background: #00c853;
     color: white;
@@ -26,11 +33,25 @@
     margin: 15px;
     border-radius: 8px;
     cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .volver:hover {
+    background: #009624;
   }
 </style>
 </head>
 <body>
+
+  <!-- 🔙 BOTÓN PARA REGRESAR AL PANEL ADMINISTRADOR -->
   <button class="volver" onclick="window.location.href='admin.html'">⬅ Volver al Panel</button>
-  <iframe src="https://lookerstudio.google.com/embed/reporting/a9b35784-f204-4a8e-a4dd-71a42a4eb2c3/page/I5rTF" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+
+  <!-- 📊 IFRAME DEL REPORTE DE LOOKER STUDIO -->
+  <iframe 
+    src="https://lookerstudio.google.com/embed/reporting/a9b35784-f204-4a8e-a4dd-71a42a4eb2c3/page/I5rTF"
+    allowfullscreen
+    sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+  </iframe>
+
 </body>
 </html>
