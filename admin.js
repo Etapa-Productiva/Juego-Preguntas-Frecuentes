@@ -1,6 +1,5 @@
 /*************************************************************
  *  PANEL ADMINISTRADOR - LÓGICA PRINCIPAL
- *  Autor: Gabriel Otálora
  *  Funciones:
  *    - Autenticación de administradores
  *    - Control de fechas de habilitación del juego
