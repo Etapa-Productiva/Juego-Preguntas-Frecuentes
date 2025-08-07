@@ -7,96 +7,99 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 🔐 LOGIN ADMIN -->
-  <section id="pantalla-login-admin" class="pantalla">
-    <div class="columna">
-      <h2>🔐 Acceso Administrador</h2>
-      <input type="email" id="admin-correo" placeholder="Correo del administrador" required />
-      <input type="password" id="admin-clave" placeholder="Contraseña" required />
-      <button onclick="loginAdministrador()">Ingresar</button>
-      <p id="mensaje-login" style="color: red;"></p>
-       <div class="autor">
+  <div class="main-layout">
+
+    <!-- 🔐 LOGIN ADMIN -->
+    <section id="pantalla-login-admin" class="pantalla">
+      <div class="columna">
+        <h2>🔐 Acceso Administrador</h2>
+        <input type="email" id="admin-correo" placeholder="Correo del administrador" required />
+        <input type="password" id="admin-clave" placeholder="Contraseña" required />
+        <button onclick="loginAdministrador()">Ingresar</button>
+        <p id="mensaje-login" style="color: red;"></p>
+        <div class="autor">
           <span>by Gabriel Otálora</span>
           <a href="https://www.linkedin.com/in/gabriel-otalora-5a0290303/" target="_blank">
-          <img src="img/linkedin.png" alt="LinkedIn" />
+            <img src="img/linkedin.png" alt="LinkedIn" />
           </a>
           <a href="https://wa.link/ctc2na" target="_blank">
-          <img src="img/telefono.png" alt="WhatsApp" />
+            <img src="img/telefono.png" alt="WhatsApp" />
           </a>
-       </div>
-    </div>
-  </section>
-
-  <!-- 🛠️ PANEL ADMINISTRADOR -->
-  <section id="pantalla-admin" class="pantalla oculto">
-    <!-- 📌 Botones superiores -->
-<div class="botones-superiores">
-  <button onclick="cerrarSesion()">Cerrar sesión</button>
-  <button onclick="mostrarInforme(this)">📊 Ver Informe</button>
-</div>
-
-<!-- 📊 Informe Looker Studio -->
-<div id="contenedor-informe" style="display:none; margin-top:20px;">
-  <iframe 
-    width="100%" 
-    height="800" 
-    src="https://lookerstudio.google.com/embed/reporting/a9b35784-f204-4a8e-a4dd-71a42a4eb2c3/page/I5rTF" 
-    frameborder="0" 
-    style="border:0;" 
-    allowfullscreen 
-    sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-  </iframe>
-</div>
-
-
-
-      <!-- 🔧 Secciones que activaremos después -->
-      <div class="bloque-admin">
-        <h3>🎮 Estado del juego</h3>
-        <p id="estado-juego">Cargando estado...</p>
-        <label>Activar juego desde: <input type="date" id="fecha-inicio" /></label>
-        <label>Hasta: <input type="date" id="fecha-fin" /></label>
-        <button onclick="guardarRangoFechas()">Guardar rango</button>
+        </div>
       </div>
+    </section>
 
-       <h3>🔍 Buscar Certificado</h3>
-       <input type="text" id="inputBusqueda" placeholder="Documento o No. Certificado" />
-       <button onclick="buscarCertificado()">Buscar</button>
-       <div id="resultadoCertificado" style="margin-top: 20px;">
-  <!-- Aquí aparecerá la tabla con los resultados -->
-  <table id="tablaCertificado" style="width:100%; border-collapse: collapse; margin-top: 10px; display: none;">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Documento</th>
-        <th>Correo</th>
-        <th>Programa</th>
-        <th>Instructor</th>
-        <th>Certificado</th>
-        <th>Fecha</th>
-        <th>Puntaje</th>
-        <th>Correctas</th>
-        <th>Incorrectas</th>
-        <th>Estado</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody id="tablaCertificadoBody">
-      <!-- JS llenará los datos aquí -->
-    </tbody>
-  </table>
-</div>
+    <!-- 🛠️ PANEL ADMINISTRADOR -->
+    <section id="pantalla-admin" class="pantalla oculto">
+      <div class="columna">
 
+        <!-- 📌 Botones superiores -->
+        <div class="botones-superiores">
+          <button onclick="cerrarSesion()">Cerrar sesión</button>
+          <button onclick="mostrarInforme(this)">📊 Ver Informe</button>
+        </div>
 
+        <!-- 📊 Informe Looker Studio -->
+        <div id="contenedor-informe" style="display:none; margin-top:20px;">
+          <iframe 
+            width="100%" 
+            height="800" 
+            src="https://lookerstudio.google.com/embed/reporting/a9b35784-f204-4a8e-a4dd-71a42a4eb2c3/page/I5rTF" 
+            frameborder="0" 
+            style="border:0;" 
+            allowfullscreen 
+            sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+          </iframe>
+        </div>
 
-      <div class="bloque-admin">
-        <h3>👥 Usuarios administradores </h3>
-        <p>Desde Firebase Authentication puedes agregar más admins.</p>
+        <!-- 🎮 Estado del juego -->
+        <div class="bloque-admin">
+          <h3>🎮 Estado del juego</h3>
+          <p id="estado-juego">Cargando estado...</p>
+          <label>Activar juego desde: <input type="date" id="fecha-inicio" /></label>
+          <label>Hasta: <input type="date" id="fecha-fin" /></label>
+          <button onclick="guardarRangoFechas()">Guardar rango</button>
+        </div>
+
+        <!-- 🔍 Buscar Certificado -->
+        <h3>🔍 Buscar Certificado</h3>
+        <input type="text" id="inputBusqueda" placeholder="Documento o No. Certificado" />
+        <button onclick="buscarCertificado()">Buscar</button>
+        <div id="resultadoCertificado" style="margin-top: 20px;">
+          <!-- Aquí aparecerá la tabla con los resultados -->
+          <table id="tablaCertificado" style="width:100%; border-collapse: collapse; margin-top: 10px; display: none;">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Correo</th>
+                <th>Programa</th>
+                <th>Instructor</th>
+                <th>Certificado</th>
+                <th>Fecha</th>
+                <th>Puntaje</th>
+                <th>Correctas</th>
+                <th>Incorrectas</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tablaCertificadoBody">
+              <!-- JS llenará los datos aquí -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 👥 Usuarios administradores -->
+        <div class="bloque-admin">
+          <h3>👥 Usuarios administradores </h3>
+          <p>Desde Firebase Authentication puedes agregar más admins.</p>
+        </div>
+
       </div>
-    </div>
-  </section>
-  
+    </section>
 
+  </div>
 
   <!-- 🔥 Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -119,4 +122,3 @@
   <script src="admin.js"></script>
 </body>
 </html>
-
