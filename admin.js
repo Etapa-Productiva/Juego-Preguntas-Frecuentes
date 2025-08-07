@@ -69,3 +69,51 @@ function guardarRangoFechas() {
     cargarFechas();
   });
 }
+
+function buscarCertificado() {
+  const valor = document.getElementById("inputBusqueda").value.trim();
+  const resultadoDiv = document.getElementById("resultadoCertificado");
+  resultadoDiv.innerHTML = "Buscando...";
+
+  firebase.database().ref("jugadores").once("value")
+    .then(snapshot => {
+      const jugadores = snapshot.val();
+      if (!jugadores) {
+        resultadoDiv.innerHTML = "❌ No se encontraron registros.";
+        return;
+      }
+
+      let encontrado = null;
+
+      // Buscar por documento o por número de certificado
+      for (let id in jugadores) {
+        const jugador = jugadores[id];
+        if (jugador.documento === valor || jugador.no_certificado === valor) {
+          encontrado = jugador;
+          break;
+        }
+      }
+
+      if (encontrado) {
+        resultadoDiv.innerHTML = `
+          <p><strong>Nombre:</strong> ${encontrado.nombre}</p>
+          <p><strong>Documento:</strong> ${encontrado.documento}</p>
+          <p><strong>Programa:</strong> ${encontrado.programa}</p>
+          <p><strong>Puntaje:</strong> ${encontrado.puntaje}</p>
+          <p><strong>Correctas:</strong> ${encontrado.correctas}</p>
+          <p><strong>Incorrectas:</strong> ${encontrado.incorrectas}</p>
+          <p><strong>Porcentaje:</strong> ${encontrado.porcentaje}%</p>
+          <p><strong>Estado:</strong> ${encontrado.estado}</p>
+          <p><strong>Fecha:</strong> ${encontrado.fecha}</p>
+          ${encontrado.no_certificado ? `<p><strong>No. Certificado:</strong> ${encontrado.no_certificado}</p>` : ""}
+        `;
+      } else {
+        resultadoDiv.innerHTML = "❌ No se encontró ningún certificado con ese dato.";
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      resultadoDiv.innerHTML = "⚠️ Error al buscar la información.";
+    });
+}
+
