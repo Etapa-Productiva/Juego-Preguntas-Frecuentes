@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Panel de Administración</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel Administrador - Juego Etapa Productiva</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="admin-container">
-    <h2>🔐 Ingreso Administrador</h2>
-    <input type="text" id="usuario" placeholder="Usuario">
-    <input type="password" id="password" placeholder="Contraseña">
-    <button onclick="iniciarSesion()">Ingresar</button>
-    
-    <div id="panel" style="display: none; margin-top: 30px;">
-      <h3>🎫 Validar Certificado</h3>
-      <input type="text" id="certificado" placeholder="No. Certificado">
-      <input type="text" id="documento" placeholder="No. Documento">
-      <button onclick="buscarCertificado()">Validar</button>
-      <p id="resultado-validacion"></p>
-
-      <hr/>
-
-      <h3>🎮 Activar o desactivar juego</h3>
-      <label>
-        <input type="checkbox" id="estado-juego" onchange="cambiarEstadoJuego()">
-        Activar juego
-      </label>
-      <p id="estado-juego-texto"></p>
+  <!-- 🔐 LOGIN ADMIN -->
+  <section id="pantalla-login-admin" class="pantalla">
+    <div class="columna">
+      <h2>🔐 Acceso Administrador</h2>
+      <input type="email" id="admin-correo" placeholder="Correo del administrador" required />
+      <input type="password" id="admin-clave" placeholder="Contraseña" required />
+      <button onclick="loginAdministrador()">Ingresar</button>
+      <p id="mensaje-login" style="color: red;"></p>
     </div>
-  </div>
+  </section>
 
-  <!-- Firebase -->
+  <!-- 🛠️ PANEL ADMINISTRADOR -->
+  <section id="pantalla-admin" class="pantalla oculto">
+    <div class="columna">
+      <h2>🛠️ Panel de Administración</h2>
+      <button onclick="cerrarSesion()">Cerrar sesión</button>
+
+      <!-- 🔧 Secciones que activaremos después -->
+      <div class="bloque-admin">
+        <h3>🎮 Estado del juego</h3>
+        <p id="estado-juego">Cargando estado...</p>
+        <label>Activar juego desde: <input type="date" id="fecha-inicio" /></label>
+        <label>Hasta: <input type="date" id="fecha-fin" /></label>
+        <button onclick="guardarRangoFechas()">Guardar rango</button>
+      </div>
+
+      <div class="bloque-admin">
+        <h3>📄 Buscar certificado (próximamente)</h3>
+        <p>Esta función permitirá validar certificados por número.</p>
+      </div>
+
+      <div class="bloque-admin">
+        <h3>👥 Usuarios administradores (próximamente)</h3>
+        <p>Desde Firebase Authentication puedes agregar más admins.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔥 Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script>
     const firebaseConfig = {
@@ -46,52 +62,8 @@
     firebase.initializeApp(firebaseConfig);
   </script>
 
-  <script>
-    function iniciarSesion() {
-      const u = document.getElementById("usuario").value;
-      const p = document.getElementById("password").value;
-      if (u === "admin" && p === "etapa2025") {
-        document.getElementById("panel").style.display = "block";
-        cargarEstadoJuego();
-      } else {
-        alert("Usuario o contraseña incorrectos.");
-      }
-    }
-
-    function buscarCertificado() {
-      const cert = document.getElementById("certificado").value.trim();
-      const doc = document.getElementById("documento").value.trim();
-      const resultado = document.getElementById("resultado-validacion");
-
-      firebase.database().ref("jugadores").once("value").then(snapshot => {
-        let valido = false;
-        snapshot.forEach(child => {
-          const data = child.val();
-          if (data.documento === doc && data.no_certificado === cert) {
-            resultado.innerHTML = `✅ Válido - ${data.nombre} - ${data.fecha}`;
-            valido = true;
-          }
-        });
-        if (!valido) resultado.innerHTML = "❌ Certificado no encontrado.";
-      });
-    }
-
-    function cambiarEstadoJuego() {
-      const estado = document.getElementById("estado-juego").checked;
-      firebase.database().ref("configuracion/juego_activo").set(estado);
-      document.getElementById("estado-juego-texto").textContent =
-        estado ? "Juego ACTIVADO" : "Juego DESACTIVADO";
-    }
-
-    function cargarEstadoJuego() {
-      firebase.database().ref("configuracion/juego_activo").once("value")
-        .then(snap => {
-          const activo = snap.val();
-          document.getElementById("estado-juego").checked = !!activo;
-          document.getElementById("estado-juego-texto").textContent =
-            activo ? "Juego ACTIVADO" : "Juego DESACTIVADO";
-        });
-    }
-  </script>
+  <!-- Tu JS -->
+  <script src="admin.js"></script>
 </body>
 </html>
+
