@@ -9,42 +9,52 @@
 <body>
   <div class="main-layout">
 
-    <!-- Pantalla de bienvenida -->
+    <!-- =====================================================
+         📌 PANTALLA DE BIENVENIDA
+         Función: Mostrar mensaje inicial y botón para ver instrucciones
+    ====================================================== -->
     <section id="pantalla-inicio" class="pantalla">
       <div class="columna">
-       <div class="cuadro-superior">¡Buena Suerte, Apreciado Aprendiz! 🏆</div>
-       <h1>🎓 Bienvenido al Juego de Preguntas</h1>
-       <img src="img/personaje_1.png" class="personaje-img" alt="Personaje de bienvenida" />
-       <p>Haz clic para leer las instrucciones</p>
-       <button onclick="mostrarInstrucciones()">Ver Instrucciones</button>
-       <div class="autor">
-         <span>by Gabriel Otálora</span>
-         <a href="https://www.linkedin.com/in/gabriel-otalora-5a0290303/" target="_blank">
-           <img src="img/linkedin.png" alt="LinkedIn">
-         </a>
-         <a href="https://wa.link/ctc2na">
-          <img src="img/telefono.png" alt="Teléfono">
-         </a>
-       </div>
+        <div class="cuadro-superior">¡Buena Suerte, Apreciado Aprendiz! 🏆</div>
+        <h1>🎓 Bienvenido al Juego de Preguntas</h1>
+        <img src="img/personaje_1.png" class="personaje-img" alt="Personaje de bienvenida" />
+        <p>Haz clic para leer las instrucciones</p>
+        <button onclick="mostrarInstrucciones()">Ver Instrucciones</button>
+
+        <!-- Créditos -->
+        <div class="autor">
+          <span>by Gabriel Otálora</span>
+          <a href="https://www.linkedin.com/in/gabriel-otalora-5a0290303/" target="_blank">
+            <img src="img/linkedin.png" alt="LinkedIn">
+          </a>
+          <a href="https://wa.link/ctc2na">
+            <img src="img/telefono.png" alt="Teléfono">
+          </a>
+        </div>
       </div>
     </section>
 
-
-    <!-- Instrucciones -->
+    <!-- =====================================================
+         📋 PANTALLA DE INSTRUCCIONES
+         Función: Mostrar las reglas y funcionamiento del juego
+    ====================================================== -->
     <section id="pantalla-instrucciones" class="pantalla oculto">
       <div class="columna">
         <h2>📋 Instrucciones</h2>
         <ul>
-          <p>🕐 Tienes 30 minutos para responder todas las preguntas. <!-- /li> -->
-          <p>❓ Cada pregunta tiene 40 segundos para responderse. <!-- /li> -->
-          <p>⛔ Si fallas o el tiempo acaba, recibirás retroalimentación. <!-- /li> -->
-          <p>🏅 Al finalizar, verás tu puntaje y certificado. <!-- /li> -->
+          <p>🕐 Tienes 30 minutos para responder todas las preguntas.</p>
+          <p>❓ Cada pregunta tiene 40 segundos para responderse.</p>
+          <p>⛔ Si fallas o el tiempo acaba, recibirás retroalimentación.</p>
+          <p>🏅 Al finalizar, verás tu puntaje y certificado.</p>
         </ul>
         <button onclick="mostrarPantallaNombre()">Continuar</button>
       </div>
     </section>
 
-    <!-- Formulario del jugador -->
+    <!-- =====================================================
+         📝 PANTALLA DE REGISTRO DEL JUGADOR
+         Función: Guardar datos del aprendiz antes de iniciar
+    ====================================================== -->
     <section id="pantalla-nombre" class="pantalla oculto">
       <div class="columna">
         <h2>👤 Registro del jugador</h2>
@@ -53,7 +63,9 @@
         <input type="number" id="numero-ficha" placeholder="No. Ficha o Grupo" required />
         <input type="text" id="nombre-programa" placeholder="Nombre del Programa" required />
         <input type="email" id="correo-usuario" placeholder="Tu correo electrónico (Habilitado)" required />
-        <select id="instructor" placeholder="Selecciona el instructor" required>
+
+        <!-- Selección del instructor -->
+        <select id="instructor" required>
           <option value="" disabled selected>Selecciona el instructor</option>
           <option value="Alba Isabel Lopez">Alba Isabel Lopez</option>
           <option value="Jaime Torres">Jaime Torres</option>
@@ -64,69 +76,58 @@
           <option value="Daniel Acero">Daniel Acero</option>
         </select>
 
+        <!-- Checkboxes obligatorios -->
         <label style="font-size: 14px; display: block; margin-top: 10px;">
           <input type="checkbox" id="Blog-CDM-SENA" required />
-          Para mas información <a href="https://acortar.link/3ICIB9" target="_blank">visita el blog de CMD SENA</a>
+          Para más información <a href="https://acortar.link/3ICIB9" target="_blank">visita el blog de CMD SENA</a>
         </label>
         <label style="font-size: 14px; display: block; margin-top: 10px;">
           <input type="checkbox" id="autorizacion" required />
           Autorizo el <a href="https://acortar.link/WgHSmC" target="_blank">tratamiento de mis datos personales</a>
         </label>
-         <label style="font-size: 14px; display: block; margin-top: 10px;">
+        <label style="font-size: 14px; display: block; margin-top: 10px;">
           <input type="checkbox" id="tyc" required />
-          Acepto los <a href="https://acortar.link/0WNrAy" target="_blank">terminos y condiciones</a>
+          Acepto los <a href="https://acortar.link/0WNrAy" target="_blank">términos y condiciones</a>
         </label>
+
         <button onclick="guardarNombre()">Continuar</button>
       </div>
     </section>
 
-    <!-- Pantalla intermedia de temas -->
+    <!-- =====================================================
+         📚 PANTALLA DE TEMAS
+         Función: Mostrar los temas que se evaluarán
+    ====================================================== -->
     <section id="pantalla-temas" class="pantalla oculto">
-  <div class="columna">
-    <h2>📚 ¿Qué aprenderás en este juego?</h2>
-    <div class="grid-temas">
-      <div class="tema-cubo">
-        🧠
-        <div class="descripcion-tema">Generalidades Etapa Productiva.</div>
+      <div class="columna">
+        <h2>📚 ¿Qué aprenderás en este juego?</h2>
+        <div class="grid-temas">
+          <div class="tema-cubo">🧠<div class="descripcion-tema">Generalidades Etapa Productiva.</div></div>
+          <div class="tema-cubo">📘<div class="descripcion-tema">Normatividad.</div></div>
+          <div class="tema-cubo">📗<div class="descripcion-tema">Formatos y Documentos.</div></div>
+          <div class="tema-cubo">🛡️<div class="descripcion-tema">Visitas y Seguimiento.</div></div>
+          <div class="tema-cubo">🤝<div class="descripcion-tema">Contrato de Aprendizaje.</div></div>
+          <div class="tema-cubo">📊<div class="descripcion-tema">Alternativas de Etapa Productiva.</div></div>
+          <div class="tema-cubo">🎯<div class="descripcion-tema">Contrato Laboral.</div></div>
+        </div>
+        <button onclick="mostrarPantallaJuego()">Estoy listo, comenzar</button>
       </div>
-      <div class="tema-cubo">
-        📘
-        <div class="descripcion-tema">Normatividad.</div>
-      </div>
-      <div class="tema-cubo">
-        📗
-        <div class="descripcion-tema">Formatos y Documentos.</div>
-      </div>
-      <div class="tema-cubo">
-        🛡️
-        <div class="descripcion-tema">Visitas y Seguimiento.</div>
-      </div>
-      <div class="tema-cubo">
-        🤝
-        <div class="descripcion-tema">Contrato de Aprendizaje.</div>
-      </div>
-      <div class="tema-cubo">
-        📊
-        <div class="descripcion-tema">Alternativas de Etapa Productiva.</div>
-      </div>
-      <div class="tema-cubo">
-        🎯
-        <div class="descripcion-tema">Contrato Laboral</div>
-      </div>
-    </div>
-    <button onclick="mostrarPantallaJuego()">Estoy listo, comenzar</button>
-  </div>
-</section>
+    </section>
 
-
-    <!-- Pantalla del juego -->
+    <!-- =====================================================
+         🎯 PANTALLA DEL JUEGO
+         Función: Mostrar preguntas, opciones y control de tiempo
+    ====================================================== -->
     <section id="pantalla-juego" class="pantalla oculto">
+      <!-- Barra de estado superior -->
       <div class="barra-top">
         <span>⏱️ Total: <span id="tiempo-total">30</span>mn</span>
         <span>🎯 Pregunta: <span id="tiempo-pregunta">20</span>s</span>
         <span>⭐ Puntaje: <span id="puntaje">0</span></span>
         <span>📊 Progreso: <span id="progreso-pregunta">1</span>/20</span>
       </div>
+
+      <!-- Contenido de la pregunta -->
       <div class="contenido-pregunta">
         <h2 id="pregunta">Pregunta aquí</h2>
         <div id="opciones"></div>
@@ -134,7 +135,10 @@
       </div>
     </section>
 
-    <!-- Pantalla final -->
+    <!-- =====================================================
+         🏆 PANTALLA FINAL
+         Función: Mostrar resultados y botón para reiniciar
+    ====================================================== -->
     <section id="pantalla-final" class="pantalla oculto">
       <div class="columna">
         <div class="cuadro-superior">¡Felicidades, lo lograste! 🎉</div>
@@ -148,9 +152,12 @@
         <button onclick="volverAlInicio()">Volver al inicio</button>
       </div>
     </section>
+
   </div>
 
-  <!-- Firebase -->
+  <!-- =====================================================
+       🔥 CONFIGURACIÓN DE FIREBASE
+  ====================================================== -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script>
@@ -166,6 +173,7 @@
     firebase.initializeApp(firebaseConfig);
   </script>
 
+  <!-- Script principal -->
   <script src="script.js"></script>
 </body>
 </html>
