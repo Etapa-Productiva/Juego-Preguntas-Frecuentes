@@ -85,17 +85,20 @@ function buscarCertificado() {
 
       let encontrado = null;
 
-      // Buscar por documento o por número de certificado
+      // Buscar por documento o número de certificado
       for (let id in jugadores) {
         const jugador = jugadores[id];
-        if (jugador.documento === valor || jugador.no_certificado === valor) {
+        if (
+          jugador.documento === valor || 
+          (jugador.no_certificado && jugador.no_certificado === valor)
+        ) {
           encontrado = jugador;
           break;
         }
       }
 
       if (encontrado) {
-        resultadoDiv.innerHTML = `
+        let html = `
           <p><strong>Nombre:</strong> ${encontrado.nombre}</p>
           <p><strong>Documento:</strong> ${encontrado.documento}</p>
           <p><strong>Programa:</strong> ${encontrado.programa}</p>
@@ -105,8 +108,18 @@ function buscarCertificado() {
           <p><strong>Porcentaje:</strong> ${encontrado.porcentaje}%</p>
           <p><strong>Estado:</strong> ${encontrado.estado}</p>
           <p><strong>Fecha:</strong> ${encontrado.fecha}</p>
-          ${encontrado.no_certificado ? `<p><strong>No. Certificado:</strong> ${encontrado.no_certificado}</p>` : ""}
         `;
+
+        if (encontrado.no_certificado) {
+          html += `<p><strong>No. Certificado:</strong> ${encontrado.no_certificado}</p>`;
+        }
+
+        // ✅ Opción de descarga si existe el ID del archivo en Drive
+        if (encontrado.driveId) {
+          html += `<p><a href="https://drive.google.com/uc?export=download&id=${encontrado.driveId}" target="_blank">📥 Descargar certificado PDF</a></p>`;
+        }
+
+        resultadoDiv.innerHTML = html;
       } else {
         resultadoDiv.innerHTML = "❌ No se encontró ningún certificado con ese dato.";
       }
@@ -116,4 +129,3 @@ function buscarCertificado() {
       resultadoDiv.innerHTML = "⚠️ Error al buscar la información.";
     });
 }
-
