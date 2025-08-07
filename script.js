@@ -28,6 +28,14 @@ function mostrarPantallaNombre() {
   document.getElementById("pantalla-nombre").classList.remove("oculto");
 }
 
+firebase.database().ref("configuracion/juego_activo").once("value").then(snap => {
+  if (!snap.val()) {
+    alert("El juego está desactivado por el administrador.");
+    location.href = "https://www.sena.edu.co"; // o página que prefieras
+  }
+});
+
+
 function guardarNombre() {
   const nombre = document.getElementById("nombre-usuario").value.trim();
   const documento = document.getElementById("numero-documento").value.trim();
