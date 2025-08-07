@@ -17,6 +17,13 @@ let resultadoEnviado = false;
 // URL de tu Web App de Apps Script unificada
 const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx6Kc-q5SNc8j7ees3l5c80Xyq3mRd3k5oKohd-FyThoWkjAqOuPZBXxqbAcHi1ieZZ4Q/exec";
 
+firebase.database().ref("configuracion/juego_activo").once("value").then(snap => {
+  if (!snap.val()) {
+    alert("El juego está desactivado por el administrador.");
+    location.href = "https://etapa-productiva.github.io/Juego-Preguntas-Frecuentes/"; 
+  }
+});
+
 // Mostrar pantallas
 function mostrarInstrucciones() {
   document.getElementById("pantalla-inicio").classList.add("oculto");
@@ -27,14 +34,6 @@ function mostrarPantallaNombre() {
   document.getElementById("pantalla-instrucciones").classList.add("oculto");
   document.getElementById("pantalla-nombre").classList.remove("oculto");
 }
-
-firebase.database().ref("configuracion/juego_activo").once("value").then(snap => {
-  if (!snap.val()) {
-    alert("El juego está desactivado por el administrador.");
-    location.href = "https://www.sena.edu.co"; // o página que prefieras
-  }
-});
-
 
 function guardarNombre() {
   const nombre = document.getElementById("nombre-usuario").value.trim();
